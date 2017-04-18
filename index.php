@@ -19,4 +19,12 @@ $sCache->headers = [
 
 $response = $sCache->get("http://www.omdbapi.com/?t=2012");
 
+$sCache->data = [
+	"name" => "Mukesh Tivari",
+	"code" => 3453,
+	"action" => "copy"
+];
+
+$response = $sCache->post("http://yourdomain.com/post.php");
+
 print_r($response);die;

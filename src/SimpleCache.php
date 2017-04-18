@@ -47,6 +47,9 @@ class SimpleCache {
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
 
 		$response = curl_exec($ch);
+
+		$this->data = [];
+		$this->headers = [];
 		
 		$this->_writetofile($filename, $response);
 
@@ -73,6 +76,9 @@ class SimpleCache {
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
 
 		$response = curl_exec($ch);
+
+		$this->data = [];
+		$this->headers = [];
 
 		return $response;
 	}
