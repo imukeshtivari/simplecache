@@ -21,7 +21,7 @@ class SimpleCache {
 
 	public function get($url){
 
-		$filename = $this->_getfilename($url, "get");
+		$filename = $this->_getfilename($url);
 
 		if(file_exists($filename)){
 			return file_get_contents($filename);
@@ -55,12 +55,6 @@ class SimpleCache {
 
 	public function post($url){
 
-		$filename = $this->_getfilename($url, "post");
-
-		if(file_exists($filename)){
-			return file_get_contents($filename);
-		}
-
 		$ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -79,13 +73,11 @@ class SimpleCache {
 		curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
 
 		$response = curl_exec($ch);
-		
-		$this->_writetofile($filename, $response);
 
 		return $response;
 	}
 
-	private function _getfilename($url, $method = "get"){
+	private function _getfilename($url){
 
 		$_filename = "";
 
@@ -94,13 +86,8 @@ class SimpleCache {
 		}
 
 		if(!empty($this->data)){
-
-			if($method == "get"){
-				$data = http_build_query($this->data);
-				$url .= (strpos($url, "?") !== false)? "&" . $data : "?" . $data;
-			}else{
-				$_filename .= json_encode($this->data);
-			}
+			$data = http_build_query($this->data);
+			$url .= (strpos($url, "?") !== false)? "&" . $data : "?" . $data;
 		}
 
 		$_filename .= $url;
